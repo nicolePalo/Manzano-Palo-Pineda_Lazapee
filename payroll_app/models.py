@@ -12,19 +12,19 @@ class Employee(models.Model):
     allowance = models.FloatField()
 
     def getName(self):
-        pass
+        return self.name
     
     def getID(self):
-        pass
+        return self.id_number
 
     def getRate(self):
-        pass
+        return self.rate
 
     def getOvertime(self):
-        pass
+        return self.overtime_pay
 
     def getAllowance(self):
-        pass
+        return self.allowance
 
     def __str__(self):
         pass
@@ -45,46 +45,46 @@ class Payslip(models.Model):
     total_pay = models.FloatField()
 
     def getIDNumber(self):
-        pass
+        return self.id_number
 
     def getMonth(self):
-        pass
+        return self.month
 
     def getDate_range(self):
-        pass
+        return self.date_range
 
     def getYear(self):
-        pass
+        return self.year
 
     def getPay_cycle(self):
-        pass
+        return self.pay_cycle
 
     def getRate(self):
-        pass
+        return self.rate
 
     def getCycleRate(self):
-        pass
+        return self.rate/2
 
     def getEarnings_allowance(self):
-        pass
+        return self.earnings_allowance
 
     def getDeductions_tax(self):
-        pass
+        return self.deductions_tax
 
     def getDeductions_health(self):
-        pass
+        return self.deductions_health
 
     def getPag_ibig(self):
-        pass
+        return self.pag_ibig
 
     def getSSS(self):
-        pass
+        return self.sss
 
     def getOvertime(self):
-        pass
+        return self.overtime
 
     def getTotal_pay(self):
-        pass
+        return self.total_pay
 
     def __str__(self):
         pass
