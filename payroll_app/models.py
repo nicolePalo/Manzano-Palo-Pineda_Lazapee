@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Refer to project specs for parameters: https://docs.google.com/document/d/1r8DYEnlicUeXxNJ3uyP1WTNX55ikbRX2tyHNzPvoP1A/edit 
 
 class Employee(models.Model):
     name = models.CharField()
