@@ -22,5 +22,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     #add here later
     path('', views.home, name='home'),
-    # The above has been given as an example.
+    path('',views.create_employee,name='create_employee'),
+    path('',views.payslips,name='payslips'),
+    path('',views.update_employee,name='update_employee'),
+    path('', views.view_payslip, name='view_payslip'),
 ]

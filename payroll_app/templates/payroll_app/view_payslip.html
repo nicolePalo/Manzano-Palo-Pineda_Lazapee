@@ -1,9 +1,47 @@
 {% extends 'payroll_app/base.html' %}
 {% load static %}
 
-
 {% block title %}View Payslip{% endblock %}
 
 {% block content %}
-
+<div class="container">
+    <div class="row">
+        <h1>Payroll Creation</h1>
+        <form action="POST">
+            <div class="row">
+                <input type="text">
+            </div>
+            <div class="row">
+                <input type="text">
+                <input type="text">
+                <input type="text">
+            </div>
+            <div class="row">
+                <a href="{% url ''%}" class="btn btn-primary"></a>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <h1>Payslip Summary</h1>
+        <table>
+            <thead>
+                <th class="col">ID Number</th>
+                <th class="col">Date</th>
+                <th class="col">Cycle</th>
+                <th class="col">Total Pay</th>
+                <th class="col">Options</th>
+            </thead>
+            <tbody>
+                {% for payslip in payslips %}
+                <tr>
+                    <td> {{ payslip.id_number}} </td>
+                    <td> {{payslip.date_range}} </td>
+                    <td> {{ payslip.cycle }} </td>
+                    <td> {{payslip.total_pay}} </td>
+                    <td> <a href="{% url ''%}" class="btn btn-primary">Options</a> </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

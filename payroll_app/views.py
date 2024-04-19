@@ -15,10 +15,14 @@ def create_employee(request):
     pass
 
 def payslips(request):
-    pass
+    return render(request, 'payroll_app/payslips.html')
 
 def update_employee(request):
     pass
 
 def view_payslip(request):
-    pass
+    if request.method == 'POST':
+        pass
+    return render(request,'payroll/view_payslip.html')
+
+    
