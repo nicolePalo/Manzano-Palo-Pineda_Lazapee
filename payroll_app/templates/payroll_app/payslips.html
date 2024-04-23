@@ -10,15 +10,40 @@
         <h1>Payroll Creation</h1>
         <form action="POST">
             <div class="row">
-                <input type="text">
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose...</button>
+                    <ul class="dropdown-menu">
+                        {% for account in accounts %}
+                        <li><a href="#">{{account.name}}</a></li>
+                    </ul>
+                </div>
             </div>
             <div class="row">
-                <input type="text">
-                <input type="text">
-                <input type="text">
-            </div>
-            <div class="row">
-                <a href="{% url 'generate_payslip'%}" class="btn btn-primary">Submit</a>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose...</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">January</a></li>
+                        <li><a href="#">February</a></li>
+                        <li><a href="#">March</a></li>
+                        <li><a href="#">April</a></li>
+                        <li><a href="#">May</a></li>
+                        <li><a href="#">June</a></li>
+                        <li><a href="#">July</a></li>
+                        <li><a href="#">August</a></li>
+                        <li><a href="#">September</a></li>
+                        <li><a href="#">October</a></li>
+                        <li><a href="#">November</a></li>
+                        <li><a href="#">December</a></li>
+                    </ul>
+                </div>
+                
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Choose...</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                    </ul>
+                </div>
             </div>
         </form>
     </div>
@@ -39,7 +64,7 @@
                     <td> {{payslip.date_range}} </td>
                     <td> {{ payslip.cycle }} </td>
                     <td> {{payslip.total_pay}} </td>
-                    <td> <a href="{% url 'view_payslip'%}" class="btn btn-primary">View</a> </td>
+                    <td> <a href="{% url 'view_payslip' %}" class="btn btn-primary">View</a> </td>
                 </tr>
             </tbody>
         </table>
