@@ -6,10 +6,12 @@ class Employee(models.Model):
     name = models.CharField(max_length=100)
     id_number = models.CharField(max_length=20)
     rate = models.FloatField()
-
     overtime_pay = models.FloatField(null=True) 
     allowance = models.FloatField(True)
 
+    def __str__(self):
+        return f"{self.pk}: {self.id_number}, rate: {self.rate}"
+    
     def getName(self):
         return self.name
     
@@ -21,12 +23,13 @@ class Employee(models.Model):
 
     def getOvertime(self):
         return self.overtime_pay
+    
+    def resetOvertime(self):
+        self.overtime_pay = 0
+        self.save()
 
     def getAllowance(self):
         return self.allowance
-
-    def __str__(self):
-        pass
 
 class Payslip(models.Model):
     id_number = models.ForeignKey(Employee, on_delete=models.CASCADE)
@@ -43,6 +46,9 @@ class Payslip(models.Model):
     overtime = models.FloatField()
     total_pay = models.FloatField()
 
+    def __str__(self):
+        return f"{self.pk}: Employee: {self.id_number}, Period: {self.month} {self.date_range}, {self.year}, Cycle: {self.pay_cycle}, Total Pay: {self.total_pay}"
+    
     def getIDNumber(self):
         return self.id_number
 
@@ -84,6 +90,3 @@ class Payslip(models.Model):
 
     def getTotal_pay(self):
         return self.total_pay
-
-    def __str__(self):
-        pass
