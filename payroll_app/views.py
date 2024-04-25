@@ -11,14 +11,21 @@ employees = Employee.objects.all()
 payslip = Payslip.objects.all()
 
 def home(request):
-    return render(request, 'payroll_app/home.html')
-# The above has been given as an example. 
+    context = {
+        'nav_selected': 'Employees' 
+    }
+    return render(request, 'payroll_app/home.html', context)
+
 
 def create_employee(request):
     pass
 
 def payslips(request):
-    return render(request, 'payroll_app/payslips.html',{payslip:'payslips'})
+    context = {
+        'nav_selected': 'Payslips',
+        payslip:'payslips'
+    }
+    return render(request, 'payroll_app/payslips.html', context)
 
 def update_employee(request):
     pass
