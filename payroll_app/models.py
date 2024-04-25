@@ -3,13 +3,12 @@ from django.db import models
 # Refer to project specs for parameters: https://docs.google.com/document/d/1r8DYEnlicUeXxNJ3uyP1WTNX55ikbRX2tyHNzPvoP1A/edit 
 
 class Employee(models.Model):
-    name = models.CharField()
-    id_number = models.CharField()
+    name = models.CharField(max_length=100)
+    id_number = models.CharField(max_length=20)
     rate = models.FloatField()
 
-    #set as nullable
-    overtime_pay = models.FloatField() 
-    allowance = models.FloatField()
+    overtime_pay = models.FloatField(null=True) 
+    allowance = models.FloatField(True)
 
     def getName(self):
         return self.name
@@ -30,10 +29,10 @@ class Employee(models.Model):
         pass
 
 class Payslip(models.Model):
-    id_number = models.ForeignKey()
-    month = models.CharField()
-    date_range = models.CharField()
-    year = models.CharField()
+    id_number = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    month = models.CharField(max_length=20)
+    date_range = models.CharField(max_length=50)
+    year = models.CharField(max_length=4)
     pay_cycle = models.IntegerField()
     rate = models.FloatField()
     earnings_allowance = models.FloatField()
