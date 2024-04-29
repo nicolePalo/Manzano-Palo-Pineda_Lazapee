@@ -12,8 +12,10 @@ employees = Employee.objects.all()
 payslip = Payslip.objects.all()
 
 def home(request):
+    employees = Employee.objects.all()
     context = {
-        'nav_selected': 'Employees' 
+        'nav_selected': 'Employees',
+        'employees': employees
     }
     return render(request, 'payroll_app/home.html', context)
 

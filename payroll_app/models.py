@@ -4,10 +4,11 @@ from django.db import models
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
-    id_number = models.CharField(max_length=20)
+    id_number = models.CharField(max_length=20, unique=True)
     rate = models.FloatField()
-    overtime_pay = models.FloatField(null=True) 
-    allowance = models.FloatField(True)
+    allowance = models.FloatField(null=True, blank=True)
+    overtime_pay = models.FloatField(null=True, blank=True) 
+    
 
     def __str__(self):
         return f"{self.pk}: {self.id_number}, rate: {self.rate}"
@@ -32,7 +33,7 @@ class Employee(models.Model):
         return self.allowance
 
 class Payslip(models.Model):
-    id_number = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    id_number = models.ForeignKey(Employee, to_field='id_number', on_delete=models.CASCADE)
     month = models.CharField(max_length=20)
     date_range = models.CharField(max_length=50)
     year = models.CharField(max_length=4)
