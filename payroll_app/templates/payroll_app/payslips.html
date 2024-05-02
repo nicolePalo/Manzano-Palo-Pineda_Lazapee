@@ -8,7 +8,8 @@
 <div class="container">
     <div class="row">
         <h1>Payroll Creation</h1>
-        <form method="post" action="{% url 'create_payslip' %}">
+        <!--Temporarily removed action="{% url 'create_payslip' % "-->
+        <form method="post" >
             {% csrf_token %}
 
             <!--Make it required for the user to input all fields.-->
@@ -86,6 +87,7 @@
                     <td> {{payslip.total_pay}} </td>
                     <td> <a href="{% url 'view_payslip' pk=payslip.id_number %}" class="btn btn-primary">View</a> </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>

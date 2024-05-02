@@ -65,3 +65,10 @@ def update_employee(request):
 def view_payslip(request, pk):
     payslip = get_object_or_404(Payslip,pk=pk)
     return render(request,'payroll/view_payslip.html', {payslip:'payslip'})
+
+def delete_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+    employee.delete()
+
+    return redirect('home')
+

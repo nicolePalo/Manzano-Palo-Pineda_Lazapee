@@ -30,10 +30,11 @@
                     <div class="container">
                         <div class="row pb-2">
                             <div class="col">
-                                <a href="#" class="btn btn-primary btn-sm w-100" style="--bs-btn-bg: #FC6736;">**Update</a>
+                                <!--style="--bs-btn-bg: #FC6736;"-->  
+                                <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">**Update</a>
                             </div>
                             <div class="col">
-                                <a href="#" class="btn btn-danger btn-sm w-100">**Delete</a>
+                                <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">**Delete</a>
                             </div>
                         </div>
                         <div class="row">
@@ -49,19 +50,6 @@
                 </td>
             </tr>
             {% endfor %}
-            <!-- 
-            {% for w in bottles %} 
-            <tr>
-                <td> {{ w.sku}} </td>
-                <td> <a href="{% url 'view_bottle_details' pk=w.pk %}"> {{ w.brand}} </td>
-                <td> {{ w.size}} </td>
-                <td> {{ w.mouth_size }} </td>
-                <td> {{ w.color }} </td>
-                <td> {{ w.supplied_by}} </td>
-                <td> {{ w.curr_quantity}} </td>
-            </tr>
-            {% endfor %}
-            -->
         </tbody>
     </table>
 
