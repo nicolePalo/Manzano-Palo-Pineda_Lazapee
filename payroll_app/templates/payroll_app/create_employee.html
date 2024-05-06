@@ -7,5 +7,43 @@
 
 {% block content %}
 
+<div class="container my-1" style="width:40%; ">
+    <div class="rounded-4 pt-1 p-3 shadow-sm bg-white bg-gradient" >
+        <h3 class="text-left mt-3" style="font-weight: bold;">Create Employee</h3> <hr class="mb-3">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <form method="POST" action="{% url 'create_employee' %}">{% csrf_token %}
+                    
+                
+                    <div class="form-group">
+                        
+                            <label for="SKU" class="form-label" style="font-weight: bold;">Name:</label>
+                            <input type="text" class="form-control mb-2" id="Brand" name="SKU" placeholder="Enter Name" required =True>
+                            
+                            
+                            <label for="Brand" class="form-label" style="font-weight: bold;">ID Number:</label>
+                            <input type="text" class="form-control mb-2" id="Brand" name="Brand" placeholder="Enter ID Number" required =True>
+                            
+                       
+                            <label for="Color" class="form-label" style="font-weight: bold;">Rate:</label>
+                            <input type="text" class="form-control mb-2" id="Color" name="Color" placeholder="Enter Rate" required =True>
+                            
+                            <label for="Color" class="form-label" style="font-weight: bold;">Allowance (Optional):</label>
+                            <input type="text" class="form-control" id="Color" name="Color" placeholder="Enter Allowance" required =False>
+                        
+                        
+                    </div>
+                   
+                    <br>
+                    <button type="submit" class="btn btn-dark">Add Employee</button>
+                    <a href="{% url 'home' %}"class="btn btn-outline-secondary" style="border-color: gray"> Back</a> 
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+    
+</div> <br><br> 
 
 {% endblock %}
+
