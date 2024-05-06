@@ -17,19 +17,19 @@
                 
                     <div class="form-group">
                         
-                            <label for="SKU" class="form-label" style="font-weight: bold;">Name:</label>
-                            <input type="text" class="form-control mb-2" id="Brand" name="SKU" placeholder="Enter Name" required =True>
+                            <label for="name" class="form-label" style="font-weight: bold;">Name:</label>
+                            <input type="text" class="form-control mb-2" id="name" name="name" placeholder="Enter Name" required =True>
                             
                             
-                            <label for="Brand" class="form-label" style="font-weight: bold;">ID Number:</label>
-                            <input type="text" class="form-control mb-2" id="Brand" name="Brand" placeholder="Enter ID Number" required =True>
+                            <label for="id" class="form-label" style="font-weight: bold;">ID Number:</label>
+                            <input type="text" class="form-control mb-2" id="id" name="id" placeholder="Enter ID Number" required =True>
                             
                        
-                            <label for="Color" class="form-label" style="font-weight: bold;">Rate:</label>
-                            <input type="text" class="form-control mb-2" id="Color" name="Color" placeholder="Enter Rate" required =True>
+                            <label for="rate" class="form-label" style="font-weight: bold;">Rate:</label>
+                            <input type="text" class="form-control mb-2" id="rate" name="rate" placeholder="Enter Rate" required =True>
                             
-                            <label for="Color" class="form-label" style="font-weight: bold;">Allowance (Optional):</label>
-                            <input type="text" class="form-control" id="Color" name="Color" placeholder="Enter Allowance" required =False>
+                            <label for="allowance" class="form-label" style="font-weight: bold;">Allowance (Optional):</label>
+                            <input type="text" class="form-control" id="allowance" name="allowance" placeholder="Enter Allowance">
                         
                         
                     </div>
@@ -45,5 +45,14 @@
     
 </div> <br><br> 
 
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" style="width:30%; margin: auto; text-align: center;" >{{ message }}</div>   
+{% endfor %}
+{% endif %}
+
 {% endblock %}
+
+
+
 

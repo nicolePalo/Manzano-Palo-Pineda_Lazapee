@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Employee, Payslip
 
+
 # Create your views here.
 '''
 All querysets done here.
@@ -21,8 +22,30 @@ def home(request):
 
 
 def create_employee(request):
-    
-    return render(request, 'payroll_app/create_employee.html')
+    employees = Employee.objects.all()
+    context = {
+        'nav_selected': 'Employees',
+        'employees': employees
+    }
+    if request.method=="POST":
+        name = request.POST.get('name')
+        id = request.POST.get('id')
+        rate = request.POST.get('rate')
+        allowance = request.POST.get('allowance')
+        if Employee.objects.filter(id=id).exists():
+            messages.error(request, 'The ID Number already exists.')
+            
+            return render(request, 'payroll_app/create_employee.html', context)
+        
+        elif allowance == "":
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
+            return redirect('home')
+        else:
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
+            return redirect('home')
+    else:
+        return render(request, 'payroll_app/create_employee.html', context )
+   
     
 
 def payslips(request):
