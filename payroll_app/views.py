@@ -22,7 +22,7 @@ def home(request):
 
 
 def create_employee(request):
-    employees = Employee.objects.all()
+    
     context = {
         'nav_selected': 'Employees',
         'employees': employees
@@ -32,7 +32,7 @@ def create_employee(request):
         id = request.POST.get('id')
         rate = request.POST.get('rate')
         allowance = request.POST.get('allowance')
-        if Employee.objects.filter(id=id).exists():
+        if Employee.objects.filter(id_number=id).exists():
             messages.error(request, 'The ID Number already exists.')
             
             return render(request, 'payroll_app/create_employee.html', context)
@@ -84,12 +84,28 @@ def payslips(request):
     else: 
         return render(request, 'payroll_app/payslips.html', context)
 
-def update_employee(request):
-    context = {
-        'nav_selected': 'Employees',
-        'employees': employees
-    }
-    return render(request, 'payroll_app/update_employee.html', context)
+def update_employee(request, pk):
+    
+    employee = get_object_or_404(Employee, pk=pk)
+    if request.method=="POST":
+        name = request.POST.get('name')
+        id = request.POST.get('id')
+        rate = request.POST.get('rate')
+        allowance = request.POST.get('allowance')
+        if Employee.objects.filter(id_number=id).exists():
+            messages.error(request, 'The ID Number already exists.')
+            
+            return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
+        
+        elif allowance == "":
+            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
+            return redirect('home')
+        else:
+            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
+            return redirect('home')
+    else:
+        return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
+    
     
     
 def view_payslip(request, pk):
