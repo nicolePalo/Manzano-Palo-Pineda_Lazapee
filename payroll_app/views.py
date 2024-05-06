@@ -21,7 +21,9 @@ def home(request):
 
 
 def create_employee(request):
-    pass
+    
+    return render(request, 'payroll_app/create_employee.html')
+    
 
 def payslips(request):
     context = {
@@ -60,7 +62,12 @@ def payslips(request):
         return render(request, 'payroll_app/payslips.html', context)
 
 def update_employee(request):
-    pass
+    context = {
+        'nav_selected': 'Employees',
+        'employees': employees
+    }
+    return render(request, 'payroll_app/update_employee.html', context)
+    
     
 def view_payslip(request, pk):
     payslip = get_object_or_404(Payslip,pk=pk)
