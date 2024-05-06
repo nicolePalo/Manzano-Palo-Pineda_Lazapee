@@ -7,7 +7,16 @@
 
 {% block content %}
 <div class="px-4 py-5 rounded-3 shadow-sm bg-white bg-gradient">
-    <h1 class="display-6 fw-bold pb-3">Employees</h1>
+    <div class="row">
+        <div class="col">
+            <h1 class=" col display-6 fw-bold pb-3">Employees</h1>
+        </div>
+        <div class="col">
+            <a href="{% url 'create_employee' %}" class="col btn  btn-lg btn-secondary float-end">+ Create new</a>
+        </div>
+        
+    </div>
+    
     <table class="table table-striped table-hover border">
         <thead>
             <tr class="table-light">
@@ -30,10 +39,11 @@
                     <div class="container">
                         <div class="row pb-2">
                             <div class="col">
-                                <a href="#" class="btn btn-primary btn-sm w-100">**Update</a>
+                                <!--style="--bs-btn-bg: #FC6736;"-->  
+                                <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">**Update</a>
                             </div>
                             <div class="col">
-                                <a href="#" class="btn btn-danger btn-sm w-100">**Delete</a>
+                                <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">**Delete</a>
                             </div>
                         </div>
                         <div class="row">
@@ -49,19 +59,6 @@
                 </td>
             </tr>
             {% endfor %}
-            <!-- 
-            {% for w in bottles %} 
-            <tr>
-                <td> {{ w.sku}} </td>
-                <td> <a href="{% url 'view_bottle_details' pk=w.pk %}"> {{ w.brand}} </td>
-                <td> {{ w.size}} </td>
-                <td> {{ w.mouth_size }} </td>
-                <td> {{ w.color }} </td>
-                <td> {{ w.supplied_by}} </td>
-                <td> {{ w.curr_quantity}} </td>
-            </tr>
-            {% endfor %}
-            -->
         </tbody>
     </table>
 

@@ -7,5 +7,52 @@
 
 {% block content %}
 
+<div class="container my-1" style="width:40%; ">
+    <div class="rounded-4 pt-1 p-3 shadow-sm bg-white bg-gradient" >
+        <h3 class="text-left mt-3" style="font-weight: bold;">Create Employee</h3> <hr class="mb-3">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <form method="POST" action="{% url 'create_employee' %}">{% csrf_token %}
+                    
+                
+                    <div class="form-group">
+                        
+                            <label for="name" class="form-label" style="font-weight: bold;">Name:</label>
+                            <input type="text" class="form-control mb-2" id="name" name="name" placeholder="Enter Name" required =True>
+                            
+                            
+                            <label for="id" class="form-label" style="font-weight: bold;">ID Number:</label>
+                            <input type="text" class="form-control mb-2" id="id" name="id" placeholder="Enter ID Number" required =True>
+                            
+                       
+                            <label for="rate" class="form-label" style="font-weight: bold;">Rate:</label>
+                            <input type="text" class="form-control mb-2" id="rate" name="rate" placeholder="Enter Rate" required =True>
+                            
+                            <label for="allowance" class="form-label" style="font-weight: bold;">Allowance (Optional):</label>
+                            <input type="text" class="form-control" id="allowance" name="allowance" placeholder="Enter Allowance">
+                        
+                        
+                    </div>
+                   
+                    <br>
+                    <button type="submit" class="btn btn-dark">Add Employee</button>
+                    <a href="{% url 'home' %}"class="btn btn-outline-secondary" style="border-color: gray"> Back</a> 
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+    
+</div> <br><br> 
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" style="width:30%; margin: auto; text-align: center;" >{{ message }}</div>   
+{% endfor %}
+{% endif %}
 
 {% endblock %}
+
+
+
+

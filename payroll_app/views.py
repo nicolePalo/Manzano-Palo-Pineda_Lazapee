@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Employee, Payslip
 
+
 # Create your views here.
 '''
 All querysets done here.
@@ -21,16 +22,39 @@ def home(request):
 
 
 def create_employee(request):
-    pass
+    employees = Employee.objects.all()
+    context = {
+        'nav_selected': 'Employees',
+        'employees': employees
+    }
+    if request.method=="POST":
+        name = request.POST.get('name')
+        id = request.POST.get('id')
+        rate = request.POST.get('rate')
+        allowance = request.POST.get('allowance')
+        if Employee.objects.filter(id=id).exists():
+            messages.error(request, 'The ID Number already exists.')
+            
+            return render(request, 'payroll_app/create_employee.html', context)
+        
+        elif allowance == "":
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
+            return redirect('home')
+        else:
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
+            return redirect('home')
+    else:
+        return render(request, 'payroll_app/create_employee.html', context )
+   
+    
 
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        payslip:'payslips',
-        'employees': employees
+        payslip:'payslips'
     }
 
-    '''if request.method == "POST":
+    if request.method == "POST":
         employee = request.POST.get('payslip_employee')
         month = request.POST.get('payslip_month')
         year = request.POST.get('payslip_year')
@@ -55,13 +79,26 @@ def payslips(request):
             Payslip.objects.create(
                 id_number=id_number,
                 cycle=2
-            )'''
+            )
                 
-    #else: 
-    return render(request, 'payroll_app/payslips.html', context)
+    else: 
+        return render(request, 'payroll_app/payslips.html', context)
 
 def update_employee(request):
-    pass
+    context = {
+        'nav_selected': 'Employees',
+        'employees': employees
+    }
+    return render(request, 'payroll_app/update_employee.html', context)
     
-def view_payslip(request): #add pk
-    return render(request,'payroll_app/view_payslip.html') #{payslip:'payslip'})
+    
+def view_payslip(request, pk):
+    payslip = get_object_or_404(Payslip,pk=pk)
+    return render(request,'payroll/view_payslip.html', {payslip:'payslip'})
+
+def delete_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+    employee.delete()
+
+    return redirect('home')
+

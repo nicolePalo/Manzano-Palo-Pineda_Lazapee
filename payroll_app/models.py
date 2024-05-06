@@ -4,7 +4,7 @@ from django.db import models
 
 class Employee(models.Model):
     name = models.CharField(max_length=100)
-    id_number = models.CharField(max_length=20)
+    id_number = models.CharField(max_length=20, unique=True)
     rate = models.FloatField()
     allowance = models.FloatField(null=True, blank=True)
     overtime_pay = models.FloatField(null=True, blank=True) 
@@ -33,7 +33,7 @@ class Employee(models.Model):
         return self.allowance
 
 class Payslip(models.Model):
-    id_number = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    id_number = models.ForeignKey(Employee, to_field='id_number', on_delete=models.CASCADE)
     month = models.CharField(max_length=20)
     date_range = models.CharField(max_length=50)
     year = models.CharField(max_length=4)
