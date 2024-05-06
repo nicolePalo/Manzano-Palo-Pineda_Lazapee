@@ -26,10 +26,11 @@ def create_employee(request):
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        payslip:'payslips'
+        payslip:'payslips',
+        'employees': employees
     }
 
-    if request.method == "POST":
+    '''if request.method == "POST":
         employee = request.POST.get('payslip_employee')
         month = request.POST.get('payslip_month')
         year = request.POST.get('payslip_year')
@@ -54,14 +55,13 @@ def payslips(request):
             Payslip.objects.create(
                 id_number=id_number,
                 cycle=2
-            )
+            )'''
                 
-    else: 
-        return render(request, 'payroll_app/payslips.html', context)
+    #else: 
+    return render(request, 'payroll_app/payslips.html', context)
 
 def update_employee(request):
     pass
     
-def view_payslip(request, pk):
-    payslip = get_object_or_404(Payslip,pk=pk)
-    return render(request,'payroll/view_payslip.html', {payslip:'payslip'})
+def view_payslip(request): #add pk
+    return render(request,'payroll_app/view_payslip.html') #{payslip:'payslip'})

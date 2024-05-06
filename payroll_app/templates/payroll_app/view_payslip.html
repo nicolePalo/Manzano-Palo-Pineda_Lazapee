@@ -4,36 +4,24 @@
 {% block title %}View Payslip{% endblock %}
 
 {% block content %}
-<div class="container">
+<!--Payslip attributes: id_number, month, year, date_range, pay_cycle, rate, earnings_allowance, deductions_tax, deductions_health, pag_ibig, sss, overtime, total_pay-->
+<div class="container mx">
     <div class="row">
         <div class="col">
-            NAME: {{ % employee.name % }}
-            ID NUMBER: {{ % employee.id_number %}}
+            <p>NAME: Placeholder</p>
+            <p>ID NUMBER: 000001</p>
         </div>
         <div class="col">
-            DATE: {{% payslip.date_range %}}
-            PAYSLIP ID: {{% payslip.id_number %}}
+            <p>MAY 6, 2024</p>
+            <p>PAYSLIP ID: 0</p>
         </div>
     </div>
     <div class="row">
-        <div class="table">
-            <div class="thead">
-                <td>
-                    <th>EARNINGS</th>
-                    <th>AMOUNT</th>
-                </td>
-            </div>
-            <div class="tbody">
-                <td>
-                    <th>Base Pay</th>
-                    <th> {{% employee.rate %}} </th>
-                </td>
-                <td>
-                    <th>Allowances</th>
-                    <th> {{% employee.allowance %}} </th>
-                </td>
-            </div>
-        </div>
+        <h4 class="text-end">AMOUNT</h4>
+        <!--Table for earnings-->
+        <table></table>
+        <!--Table for deductions-->
     </div>
 </div>
+
 {% endblock %}

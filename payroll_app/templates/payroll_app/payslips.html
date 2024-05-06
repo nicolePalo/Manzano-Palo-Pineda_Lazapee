@@ -6,9 +6,9 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
+    <div class="row gap-3">
         <h1>Payroll Creation</h1>
-        <form method="post" action="{% url 'create_payslip' %}">
+        <form method="post" action="#">
             {% csrf_token %}
 
             <!--Make it required for the user to input all fields.-->
@@ -20,20 +20,20 @@
             {% endfor %}
 
         {% endif %}
-            <div class="row">
-                <div class="form-group">
-                    <label for="employee">Employee</label>
+            <div class="row mx-auto" style="width: 200px;">
+                <div class="form-group p-3">
+                    <label for="employee">Payslip for...</label>
                     <select name="payslip_employee" id="payslip_employee" class="form-control">
                         <option value="" disabled selected>Select Employee</option>
-                            <option value="All Employees"></option>
-                        {% for employee in employees %}
-                            <option value="{{employee.id}}">{{employee.id}}</option>
-                        {% endfor %}
+                            {% for employee in employees %}
+                                <option value="{{employee.id_number}}">{{employee.id_number}}</option>
+                            {% endfor %}
+                            <option value="All Employees">All Employees</option>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="form-group">
+                <div class="col form-group p-3">
                     <label for="pay_date">Month</label>
                     <select name="payslip_date" id="payslip_date" class="form-control">
                         <option value="" disabled selected>Select Month</option>
@@ -51,11 +51,11 @@
                             <option value="December">December</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="col form-group mt-5">
                     <label for="pay_year">Year</label>
                     <input type="text" name="payslip_year" id="payslip_year">
                 </div>
-                <div class="form-group">
+                <div class="col form-group p-3">
                     <label for="pay_cycle">Pay Cycle</label>
                     <select name="payslip_cycle" id="payslip_cycle" class="form-control">
                         <option value="" disabled selected>Select Cycle</option>
@@ -64,10 +64,10 @@
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="submit p-3" class="btn btn-success">Submit</button>
         </form>
     </div>
-    <div class="row">
+    <div class="row mt-4">
         <h1>Payslip Summary</h1>
         <table>
             <thead>
@@ -86,6 +86,7 @@
                     <td> {{payslip.total_pay}} </td>
                     <td> <a href="{% url 'view_payslip' pk=payslip.id_number %}" class="btn btn-primary">View</a> </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
