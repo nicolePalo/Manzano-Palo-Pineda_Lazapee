@@ -51,35 +51,34 @@ def create_employee(request):
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        payslip:'payslips'
+        payslip:'payslips',
+        'employees':employees
     }
 
     if request.method == "POST":
         employee = request.POST.get('payslip_employee')
+
+        if employee == "All Employees":
+            pass
+        else:
+            employee = get_object_or_404(Employee,pk=employee)
+        
         month = request.POST.get('payslip_month')
         year = request.POST.get('payslip_year')
         cycle = request.POST.get('payslip_cycle')
 
-        if Payslip.objects.filter(employee=employee).exists():
-            messages.error(request, "Employee already has payslip.")
-            return render(request, 'payroll_app/payslips.html', context)
-        else: 
-            id_number = get_object_or_404(Employee,pk=employee)
-
-            # Cycle 1 payslip
-            Payslip.objects.create(
-                id_number=id_number,
-                month=month,
-                date_range='',
-                year=year,
-                cycle=1
-            )
-
-            #Cycle 2 payslip
-            Payslip.objects.create(
-                id_number=id_number,
-                cycle=2
-            )
+        philhealth = 0.045*employee.rate
+        sss = 0.040*employee.rate
+        
+        if cycle == 1:
+            days = "1-15"
+            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100)*0.2
+            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100) - tax
+        elif cycle == 2:
+            days = "15-30"
+            pagibig = 0
+            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss )*0.2
+            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss ) - tax
                 
     else: 
         return render(request, 'payroll_app/payslips.html', context)
