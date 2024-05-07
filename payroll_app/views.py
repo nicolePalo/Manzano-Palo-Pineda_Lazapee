@@ -10,7 +10,7 @@ Creating Data Records: The django application receives the data from the form th
 '''
 
 employees = Employee.objects.all()
-payslip = Payslip.objects.all()
+payslips = Payslip.objects.all()
 
 def home(request):
     employees = Employee.objects.all()
@@ -45,41 +45,65 @@ def create_employee(request):
             return redirect('home')
     else:
         return render(request, 'payroll_app/create_employee.html', context )
-   
-    
 
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        payslip:'payslips',
+        'payslips':payslips,
         'employees':employees
     }
 
     if request.method == "POST":
-        employee = request.POST.get('payslip_employee')
-
-        if employee == "All Employees":
-            pass
-        else:
-            employee = get_object_or_404(Employee,pk=employee)
         
-        month = request.POST.get('payslip_month')
+        #data obtained from form. do not modify.
+        id = request.POST.get('payslip_employee')
+        month = request.POST.get('payslip_date')
         year = request.POST.get('payslip_year')
-        cycle = request.POST.get('payslip_cycle')
+        pay_cycle = request.POST.get('payslip_cycle')
+        #----------------------------------------------------------------------------------
 
-        philhealth = 0.045*employee.rate
-        sss = 0.040*employee.rate
+        #So far didn't start coding for cases of "All Employees"
+        employee = Employee.objects.filter(id_number=id)
+
+        if pay_cycle == 1:
+            date_range = f'{month} 1-15, {year}'
+            Payslip.objects.create(id_number = id,
+                                   month=month,
+                                   date_range=date_range,
+                                   year=year,
+                                   pay_cycle=1,
+                                   rate=0.5*employee.rate,
+                                   earnings_allowance=employee.allowance,
+                                   deductions_tax=0.2*((0.5*employee.rate)+employee.allowance+employee.overtime-100),
+                                   deductions_health=0,
+                                   pag_ibig=100,
+                                   sss=0,
+                                   overtime=employee.overtime_pay,
+                                   total_pay=0.8*((0.5*employee.rate)+employee.allowance+employee.overtime-100))
+            return redirect('payslips')
+
+        if pay_cycle == 2:
+            date_range = f'{month} 16-30, {year}'
+            Payslip.objects.create(id_number = id,
+                                   month=month,
+                                   date_range=date_range,
+                                   year=year,
+                                   pay_cycle=1,
+                                   rate= 0.5*employee.rate,
+                                   earnings_allowance=employee.allowance,
+                                   deductions_tax=0.2*((0.5*employee.rate)+employee.allowance+employee.overtime-0.04*employee.rate-0.045*employee.rate),
+                                   deductions_health=0.04*employee.rate,
+                                   pag_ibig=0,
+                                   sss= 0.045*employee.rate,
+                                   overtime=employee.overtime_pay,
+                                   total_pay=0.8*((0.5*employee.rate)+employee.allowance+employee.overtime-0.04*employee.rate-0.045*employee.rate))
+            return redirect('payslips')
         
-        if cycle == 1:
-            days = "1-15"
-            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100)*0.2
-            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100) - tax
-        elif cycle == 2:
-            days = "15-30"
-            pagibig = 0
-            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss )*0.2
-            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss ) - tax
-                
+        #debugging
+        query = Payslip.objects.all()
+        print(query)
+        
+        return render(request, 'payroll_app/payslips.html', context)
     else: 
         return render(request, 'payroll_app/payslips.html', context)
 
