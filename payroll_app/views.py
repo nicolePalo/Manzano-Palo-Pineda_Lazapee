@@ -45,13 +45,13 @@ def create_employee(request):
             return redirect('home')
     else:
         return render(request, 'payroll_app/create_employee.html', context )
-   
-    
 
-def payslips(request):
+
+
+ def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        payslip:'payslips',
+        'payslips' : payslip,
         'employees':employees
     }
 
@@ -65,23 +65,70 @@ def payslips(request):
         
         month = request.POST.get('payslip_month')
         year = request.POST.get('payslip_year')
-        cycle = request.POST.get('payslip_cycle')
+        cycle = int(request.POST.get('payslip_cycle'))
 
-        philhealth = 0.045*employee.rate
-        sss = 0.040*employee.rate
+        philhealth = 0.045*float(employee.rate)
+        sss = 0.040*float(float(employee.rate))
         
         if cycle == 1:
             days = "1-15"
-            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100)*0.2
-            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - 100) - tax
+            tax = ((0.5*float(employee.rate)) +employee.allowance + employee.overtime_pay - 100)*0.2
+            pay = ((0.5*float(employee.rate)) +employee.allowance + employee.overtime_pay - 100) - tax
         elif cycle == 2:
             days = "15-30"
             pagibig = 0
-            tax = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss )*0.2
-            pay = ((0.5*employee.rate) +employee.allowance + employee.overtime_pay - philhealth - sss ) - tax
+            tax = ((0.5*float(employee.rate)) +employee.allowance + employee.overtime_pay - philhealth - sss )*0.2
+            pay = ((0.5*float(employee.rate)) +employee.allowance + employee.overtime_pay - philhealth - sss ) - tax
                 
     else: 
         return render(request, 'payroll_app/payslips.html', context)
+
+'''
+def payslips(request):
+    context = {
+        'nav_selected': 'Payslips',
+        'payslips': Payslip.objects.all(),
+        'employees': Employee.objects.all()
+    }
+
+    if request.method == "POST":
+        employee = request.POST.get('payslip_employee')
+        if employee == "All Employees":
+            payslips = Payslip.objects.all()
+        else:
+            employee = get_object_or_404(Employee, pk=employee)
+            payslips = Payslip.objects.filter(id_number=employee.id_number)
+
+        month = request.POST.get('payslip_month')
+        year = request.POST.get('payslip_year')
+        cycle = int(request.POST.get('payslip_cycle'))
+
+        for payslip in payslips:
+            philhealth = 0.045 * float(payslip.employee.rate)
+            sss = 0.040 * float(payslip.employee.rate)
+
+            if cycle == 1:
+                days = "1-15"
+                tax = ((0.5 * float(payslip.employee.rate)) + payslip.employee.allowance + payslip.employee.overtime_pay - 100) * 0.2
+                pay = ((0.5 * float(payslip.employee.rate)) + payslip.employee.allowance + payslip.employee.overtime_pay - 100) - tax
+            elif cycle == 2:
+                days = "15-30"
+                pagibig = 0
+                tax = ((0.5 * float(payslip.employee.rate)) + payslip.employee.allowance + payslip.employee.overtime_pay - philhealth - sss) * 0.2
+                pay = ((0.5 * float(payslip.employee.rate)) + payslip.employee.allowance + payslip.employee.overtime_pay - philhealth - sss) - tax
+
+            Payslip.objects.create(days = days, philhealth = philhealth, sss=sss, tax=tax, pay=pay))
+            
+   
+            payslip.days = days
+            payslip.philhealth = philhealth
+            payslip.sss = sss
+            payslip.tax = tax
+            payslip.net_pay = pay
+            payslip.save()
+
+    return render(request, 'payroll_app/payslips.html', context)
+'''    
 
 def update_employee(request, pk):
     
@@ -121,4 +168,6 @@ def add_overtime(request, pk):
         employee = get_object_or_404(Employee, pk=pk)
         employee.add_overtime_hours(overtime_hours)
     return redirect('home')
+
+
 
