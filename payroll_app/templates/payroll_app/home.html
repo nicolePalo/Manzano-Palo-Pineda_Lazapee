@@ -54,18 +54,13 @@
                 <td>{{ employee.overtime_pay }}</td>
                 <td>
                     <div class="container">
-                        <div class="row pb-2">
-                            <div class="col">
-                                <!--style="--bs-btn-bg: #FC6736;"-->  
-                                <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">Update</a>
-                            </div>
-                            <div class="col">
-                                <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">Delete</a>
-                            </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-start pb-2">
+                            <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">Update</a>
+                            <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">Delete</a>
                         </div>
                         <form class="row" id="overtime-form" method="post" action="{% url 'add_overtime' employee.pk%}">{% csrf_token %}
-                            <div class="col-lg-9">
-                                <input type="number" id="overtime-hours" name="overtime-hours" class="form-control form-control-sm d-inline" placeholder="Overtime Hours">
+                            <div class="col-lg-9 pb-sm-2 pb-lg-0">
+                                <input type="number" id="overtime-hours" name="overtime-hours" class="form-control form-control-sm d-inline me-md-2" placeholder="Overtime Hours">
                             </div>
                             <div class="col-lg-3">
                                 <button type="submit" class="btn btn-success w-100 btn-sm add-overtime">Add</button>
