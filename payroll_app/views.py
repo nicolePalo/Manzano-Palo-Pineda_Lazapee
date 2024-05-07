@@ -102,7 +102,7 @@ def payslips(request):
         #debugging
         query = Payslip.objects.all()
         print(query)
-        
+
         return render(request, 'payroll_app/payslips.html', context)
     else: 
         return render(request, 'payroll_app/payslips.html', context)
@@ -129,9 +129,9 @@ def update_employee(request, pk):
     else:
         return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
     
-def view_payslip(request, pk):
-    payslip = get_object_or_404(Payslip,pk=pk)
-    return render(request,'payroll/view_payslip.html', {payslip:'payslip'})
+def view_payslip(request):
+    #payslip = get_object_or_404(Payslip,pk=pk)
+    return render(request,'payroll_app/view_payslip.html') #add context later
 
 def delete_employee(request, pk):
     employee = get_object_or_404(Employee, pk=pk)

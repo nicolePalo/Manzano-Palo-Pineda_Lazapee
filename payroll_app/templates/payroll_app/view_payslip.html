@@ -1,32 +1,82 @@
 {% extends 'payroll_app/base.html' %}
 {% load static %}
 
-{% block title %}View Payslip{% endblock %}
+{% block title %}Payslip Details{% endblock %}
 
 {% block content %}
 <!--Payslip attributes: id_number, month, year, date_range, pay_cycle, rate, earnings_allowance, deductions_tax, deductions_health, pag_ibig, sss, overtime, total_pay-->
+
 <div class="container mx">
     <div class="row">
-        <div class="col">
-            <p>NAME: Placeholder</p>
-            <p>ID NUMBER: 000001</p>
+        <div class="col-9">
+            <p>NAME: {name}</p>
+            <p>ID NUMBER: {id_number}</p>
         </div>
-        <div class="col">
-            <p>MAY 6, 2024</p>
-            <p>PAYSLIP ID: 0</p>
+        <div class="col-3">
+            <p>DATE: {date_range}</p>
+            <p>PAYSLIP ID: {pk}</p>
         </div>
     </div>
-    <div class="row">
-        <h4 class="text-end">AMOUNT</h4>
-        <!--Table for earnings-->
-        <table>
-            <thead>
-                <td>  </td>
-                <td> Two </td>
-
-            </thead>
-        </table>
-        <!--Table for deductions-->
+    
+    <div class="card">
+        <div class="card-heading p-3"><h2>Payslip for {name}, {month} {year}</h2></div>
+        <div class="card-body p-3">
+            <div class="row">
+                <table class="table">
+                    <thead class="thead">
+                        <th class="col-8">Earnings</th>
+                        <th class="col-4">Amount</th>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul>Base Pay</ul>
+                            <ul>Allowance</ul>
+                            <ul>Overtime</ul>
+                        </td>
+                        <td>
+                            <ul>{rate}</ul>
+                            <ul>{allowance}</ul>
+                            <ul>{overtime}</ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h5>Gross Pay</h5></td>
+                        <td><h5>{sum}</h5></td>
+                    </tr>
+                </table>
+            </div>
+           <div class="row">
+                <table class="table">
+                    <thead>
+                        <th class="col-8">Deductions</th>
+                        <th class="col-4">Amount</th>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ul>Withholding Tax</ul>
+                            <ul>Philhealth</ul>
+                            <ul>SSS</ul>
+                        </td>
+                        <td>
+                            <!--The only thing that changes depending on the cycle-->
+                            <ul>{deductions_tax}</ul>
+                            <ul>{deductions_health}</ul>
+                            <ul>{sss}</ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><h5>Total deductions</h5></td>
+                        <td><h5>{sum2}</h5></td>
+                    </tr>
+                </table>
+                <table class="table p-3">
+                    <thead>
+                        <th class="col-8"><h3>NET PAY</h3></th>
+                        <th class="col-4"><h3>total_pay</h3></th>
+                    </thead>
+                </table>
+           </div>
+        </div>
     </div>
 </div>
 
