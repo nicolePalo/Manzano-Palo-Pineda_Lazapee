@@ -31,7 +31,7 @@
                                         <option value="" disabled selected>Select Employee</option>
                                             <option value="{{employees}}">All Employees</option>
                                             {% for employee in employees %}
-                                                <option value="{{employee.id_number}}">{{employee.id_number}} ({{employee.name}})</option>
+                                                <option value="{{employee.pk}}">{{employee.id_number}} ({{employee.name}})</option>
                                             {% endfor %}
                                     </select>
                                 </div>
@@ -104,8 +104,8 @@
                     <td> {{ payslip.id_number}} </td>
                     <td> {{ payslip.date_range}} </td>
                     <td> {{ payslip.cycle }} </td>
-                    <td> {{ payslip.total_pay}} </td>
-                    <td> <a href="{% url 'view_payslip' pk=payslip.id_number %}" class="btn btn-success">View</a> </td>
+                    <td> {{payslip.total_pay}} </td>
+                    <td> <a href="{% url 'view_payslip' %}" class="btn btn-success">View</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
