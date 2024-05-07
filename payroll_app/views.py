@@ -106,8 +106,6 @@ def update_employee(request, pk):
     else:
         return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
     
-    
-    
 def view_payslip(request, pk):
     payslip = get_object_or_404(Payslip,pk=pk)
     return render(request,'payroll/view_payslip.html', {payslip:'payslip'})
@@ -116,5 +114,12 @@ def delete_employee(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
     employee.delete()
 
+    return redirect('home')
+
+def add_overtime(request, pk):
+    if request.method=="POST":
+        overtime_hours = request.POST.get('overtime-hours')
+        employee = get_object_or_404(Employee, pk=pk)
+        employee.add_overtime_hours(overtime_hours)
     return redirect('home')
 

@@ -40,20 +40,20 @@
                         <div class="row pb-2">
                             <div class="col">
                                 <!--style="--bs-btn-bg: #FC6736;"-->  
-                                <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">**Update</a>
+                                <a href="{% url 'update_employee' employee.pk %}" class="btn btn-primary btn-sm w-100">Update</a>
                             </div>
                             <div class="col">
-                                <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">**Delete</a>
+                                <a href="{% url 'delete_employee' employee.pk %}" class="btn btn-danger btn-sm w-100">Delete</a>
                             </div>
                         </div>
-                        <div class="row">
+                        <form class="row" id="overtime-form" method="post" action="{% url 'add_overtime' employee.pk%}">{% csrf_token %}
                             <div class="col-lg-9">
-                                <input type="number" class="form-control form-control-sm d-inline" placeholder="Overtime Hours">
+                                <input type="number" id="overtime-hours" name="overtime-hours" class="form-control form-control-sm d-inline" placeholder="Overtime Hours">
                             </div>
                             <div class="col-lg-3">
-                                <button class="btn btn-success w-100 btn-sm add-overtime">**Add</button>
+                                <button type="submit" class="btn btn-success w-100 btn-sm add-overtime">**Add</button>
                             </div>
-                        </div>
+                        </form>
                         
                     </div>
                 </td>

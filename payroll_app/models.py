@@ -31,6 +31,14 @@ class Employee(models.Model):
 
     def getAllowance(self):
         return self.allowance
+    
+    def add_overtime_hours(self, overtime_hours):
+        try:
+            overtime_pay = (float(self.rate)/160) * 1.5 * float(overtime_hours)
+            self.overtime_pay += overtime_pay
+            self.save()
+        except ValueError:
+            print(f"Error: Invalid overtime hours for employee {self.name}")
 
 class Payslip(models.Model):
     id_number = models.ForeignKey(Employee, to_field='id_number', on_delete=models.CASCADE)
