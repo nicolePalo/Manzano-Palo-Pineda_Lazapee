@@ -6,7 +6,23 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="px-4 py-5 rounded-3 shadow-sm bg-white bg-gradient">
+<div class="col-xxl-8 px-4 pb-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 pb-5">
+      <div class="col-10 col-sm-8 col-lg-6">
+        {% load static %}
+        <img src="{% static 'hero_graphic.png' %}" class="d-block mx-lg-auto img-fluid" alt="payroll-img" width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6">
+        <h1 class="display-5 fw-bold lh-1 mb-3">Payroll made easy</h1>
+        <p class="lead">Lazapee's easy-to-use payroll system is designed for everyone.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">View Employees</button>
+          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Payslips</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="px-4 py-5 rounded-3 shadow-sm bg-white bg-gradient mb-5">
     <div class="row">
         <div class="col">
             <h1 class=" col display-6 fw-bold pb-3">Employees</h1>
