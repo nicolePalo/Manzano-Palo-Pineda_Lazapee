@@ -133,13 +133,11 @@ def update_employee(request, pk):
     
 def view_payslip(request,pk):
     context={
-        'payslip':payslip,
+        payslip:'payslip',
         'deductions':deductions,
         'deduct_values':deduct_values,
-        'employee':employee
     }
     payslip = get_object_or_404(Payslip,pk=pk)
-    employee = payslip.employee
 
     if payslip.pay_cycle == 1:
         deductions = ['Pag-ibig']

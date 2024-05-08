@@ -99,11 +99,11 @@
             <tbody>
                 {% for payslip in payslips %}
                 <tr>
-                    <td> {{ payslip.id_number}} </td>
+                    <td> {{ payslip.employee.id_number}} </td>
                     <td> {{ payslip.date_range}} </td>
-                    <td> {{ payslip.cycle }} </td>
-                    <td> {{payslip.total_pay}} </td>
-                    <td> <a href="{% url 'view_payslip' %}" class="btn btn-success">View</a> </td>
+                    <td> {{ payslip.pay_cycle }} </td>
+                    <td> {{ payslip.total_pay}} </td>
+                    <td> <a href="{% url 'view_payslip' pk=payslip.pk %}" class="btn btn-success">View</a> </td>
                 </tr>
                 {% endfor %}
             </tbody>
