@@ -12,13 +12,13 @@
         <h3 class="text-left mt-3" style="font-weight: bold;">Update Employee</h3> <hr class="mb-3">
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <form method="POST" action="{% url 'update_employee' employee.pk%}">{% csrf_token %}
+                <form method="POST" action="{% url 'update_employee' employee.pk %}">{% csrf_token %}
                     
                 
                     <div class="form-group">
                         
                             <label for="name" class="form-label" style="font-weight: bold;">Name:</label>
-                            <input type="text" class="form-control mb-2" id="name" name="name" value={{employee.name}} required =True>
+                            <input type="text" class="form-control mb-2" id="name" name="name" value="{{employee.name}}" required =True>
                             
                             <label for="id" class="form-label" style="font-weight: bold;">ID Number:</label>
                             <input type="number" class="form-control mb-2" id="id" name="id" value={{employee.id_number}} required =True disabled>

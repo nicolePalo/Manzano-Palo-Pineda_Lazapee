@@ -101,42 +101,50 @@ def payslips(request):
             employees = [Employee.objects.get(pk=employee_id)]
 
         for employee in employees:
-            last_day = calendar.monthrange(int(year), int(month_int))[1]
-            if pay_cycle == 1:
-                date_range = f'{month} 1-{last_day//2}, {year}'
-                tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
-                pag_ibig = 100
-                deductions_health = 0
-                sss=0
-            elif pay_cycle == 2:
-                date_range = f'{month} {last_day//2 + 1}-{last_day}, {year}'
-                tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
-                pag_ibig = 0
-                deductions_health = employee.rate*0.04
-                sss=employee.rate*0.045
-            else:
-                messages.error(request, f"Invalid pay cycle selected for employee")
+            
+            #handles duplicates
+            if Payslip.objects.filter(employee=employee,month=month,year=year,pay_cycle=pay_cycle).exists():
+                messages.error(request,f'[ERROR: Failed to create payslip. Payslip already exists for {employee.name}.')
                 return render(request, 'payroll_app/payslips.html', context)
 
-            tax = 0.2 * tot_pay_no_tax
+            else:
 
-            payslip = Payslip.objects.create(
-                employee=employee,
-                month=month,
-                date_range=date_range,
-                year=year,
-                pay_cycle=pay_cycle,
-                rate=0.5*employee.rate,
-                earnings_allowance=employee.allowance or 0,
-                deductions_tax=tax,
-                deductions_health=deductions_health,
-                pag_ibig=pag_ibig,
-                sss=sss,
-                overtime=employee.overtime_pay or 0,
-                total_pay=tot_pay_no_tax - tax
-            )
+                last_day = calendar.monthrange(int(year), int(month_int))[1]
+                if pay_cycle == 1:
+                    date_range = f'{month} 1-{last_day//2}, {year}'
+                    tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
+                    pag_ibig = 100
+                    deductions_health = 0
+                    sss=0
+                elif pay_cycle == 2:
+                    date_range = f'{month} {last_day//2 + 1}-{last_day}, {year}'
+                    tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
+                    pag_ibig = 0
+                    deductions_health = employee.rate*0.04
+                    sss=employee.rate*0.045
+                else:
+                    messages.error(request, f"Invalid pay cycle selected for employee")
+                    return render(request, 'payroll_app/payslips.html', context)
 
-            employee.resetOvertime()
+                tax = 0.2 * tot_pay_no_tax
+
+                payslip = Payslip.objects.create(
+                    employee=employee,
+                    month=month,
+                    date_range=date_range,
+                    year=year,
+                    pay_cycle=pay_cycle,
+                    rate=0.5*employee.rate,
+                    earnings_allowance=employee.allowance or 0,
+                    deductions_tax=tax,
+                    deductions_health=deductions_health,
+                    pag_ibig=pag_ibig,
+                    sss=sss,
+                    overtime=employee.overtime_pay or 0,
+                    total_pay=tot_pay_no_tax - tax
+                )
+
+                employee.resetOvertime()
 
 
         return redirect('payslips')
