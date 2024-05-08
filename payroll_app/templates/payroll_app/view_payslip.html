@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <td><h5>Gross Pay</h5></td>
-                        <td><h5>{sum}</h5></td>
+                        <td><h5>{{earned_sum}}</h5></td>
                     </tr>
                 </table>
             </div>
@@ -69,13 +69,13 @@
                     </tr>
                     <tr>
                         <td><h5>Total deductions</h5></td>
-                        <td><h5>{sum2}</h5></td>
+                        <td><h5>{{deduct_sum}}</h5></td>
                     </tr>
                 </table>
                 <table class="table p-3">
                     <thead>
                         <th class="col-8"><h3>NET PAY</h3></th>
-                        <th class="col-4"><h3>total_pay</h3></th>
+                        <th class="col-4"><h3>{{payslip.total_pay}}</h3></th>
                     </thead>
                 </table>
            </div>
