@@ -156,15 +156,14 @@ def view_payslip(request,pk):
         deductions = ['PhilHealth','SSS']
         deduct_values = [payslip.deductions_health,payslip.sss]
         deduct_sum = float(payslip.deductions_tax)+float(payslip.deductions_health)+float(payslip.sss)
-    
+        
     context={
-        'payslip':payslip,
+        'payslip':Payslip.objects.all(),
         'deductions':deductions,
         'deduct_values':deduct_values,
         'deduct_sum':deduct_sum,
         'earned_sum':earned_sum
     }
-
     return render(request,'payroll_app/view_payslip.html',context) #add context later
 
 def delete_employee(request, pk):
