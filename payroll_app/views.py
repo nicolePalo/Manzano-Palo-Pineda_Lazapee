@@ -65,13 +65,21 @@ def payslips(request):
         if pay_cycle == 1:
             date_range = f'{month} 1-15, {year}'
             tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
-            tax = 0.2 * tot_pay_no_tax
-            payslip = Payslip.objects.create(
+        elif pay_cycle == 2:
+            date_range = f'{month} 16-31, {year}'
+            tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - employee.rate*0.045 - employee.rate - 0.04
+        else:
+            #  add error handling
+            pass
+
+        tax = 0.2 * tot_pay_no_tax
+
+        payslip = Payslip.objects.create(
                 employee=employee,
                 month=month,
                 date_range=date_range,
                 year=year,
-                pay_cycle=1,
+                pay_cycle=pay_cycle,
                 rate=0.5 * employee.rate,
                 earnings_allowance=employee.allowance or 0,
                 deductions_tax=tax,
@@ -81,8 +89,11 @@ def payslips(request):
                 overtime=employee.overtime_pay or 0,
                 total_pay=tot_pay_no_tax - tax
             )
-            return redirect('payslips')
         
+        return redirect('payslips')
+        
+
+
 
         ''' NOT REVIEWED YET! I can try to review leter - ethan
         if pay_cycle == 2:
