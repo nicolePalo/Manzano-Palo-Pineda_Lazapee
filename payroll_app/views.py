@@ -50,6 +50,30 @@ def create_employee(request):
     else:
         return render(request, 'payroll_app/create_employee.html', context )
 
+def update_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        id_number = request.POST.get('id')
+        rate = request.POST.get('rate')
+        allowance = request.POST.get('allowance')
+
+        if Employee.objects.filter(id_number=id_number).exists():
+            messages.error(request, 'The ID Number already exists.')
+            return render(request, 'payroll_app/update_employee.html', {'employee': employee})
+
+        employee.name = name
+        employee.id_number = id_number
+        employee.rate = rate
+        employee.allowance = allowance or 0
+        employee.overtime_pay = 0
+        employee.save()
+        return redirect('home')
+
+    return render(request, 'payroll_app/update_employee.html', {'employee': employee})
+
+
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
