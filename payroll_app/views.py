@@ -91,9 +91,15 @@ def payslips(request):
             if pay_cycle == 1:
                 date_range = f'{month} 1-{last_day//2}, {year}'
                 tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
+                pag_ibig = 100
+                deductions_health = 0
+                sss=0
             elif pay_cycle == 2:
                 date_range = f'{month} {last_day//2 + 1}-{last_day}, {year}'
                 tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
+                pag_ibig = 0
+                deductions_health = employee.rate*0.04
+                sss=employee.rate*0.045
             else:
                 # Add error handling
                 pass
@@ -106,12 +112,12 @@ def payslips(request):
                 date_range=date_range,
                 year=year,
                 pay_cycle=pay_cycle,
-                rate=0.5 * employee.rate,
+                rate=0.5*employee.rate,
                 earnings_allowance=employee.allowance or 0,
                 deductions_tax=tax,
-                deductions_health=0,
-                pag_ibig=100,
-                sss=0,
+                deductions_health=deductions_health,
+                pag_ibig=pag_ibig,
+                sss=sss,
                 overtime=employee.overtime_pay or 0,
                 total_pay=tot_pay_no_tax - tax
             )
