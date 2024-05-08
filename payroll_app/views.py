@@ -133,7 +133,7 @@ def update_employee(request, pk):
     
 def view_payslip(request,pk):
     context={
-        payslip:'payslip',
+        'payslip':payslip,
         'deductions':deductions,
         'deduct_values':deduct_values,
     }
