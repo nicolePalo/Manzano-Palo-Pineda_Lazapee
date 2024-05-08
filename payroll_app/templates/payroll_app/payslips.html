@@ -9,82 +9,80 @@
     <div class="row">
         <div class="col-md-8">
             <h1 class="display-6 fw-bold pb-3">Payslip Creation</h1>
-            <div class="card">
-                <div class="card-body">
-                    <form class='form-inline' method="post" action="{% url 'payslips' %}"> 
-                        {% csrf_token %}
-            
-                        <!--Make it required for the user to input all fields.-->
-                        {% if messages %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">
-                                    {{ message }}
-                                </div>
-                            {% endfor %}
-            
-                        {% endif %}
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="employee">Employee</label>
-                                    <select name="payslip_employee" id="payslip_employee" class="form-control">
-                                        <option value="" disabled selected>Select Employee</option>
-                                            <option value="{{employees}}">All Employees</option>
-                                            {% for employee in employees %}
-                                                <option value="{{employee.pk}}">{{employee.id_number}} ({{employee.name}})</option>
-                                            {% endfor %}
-                                    </select>
-                                </div>
+                <form class='form-inline' method="post" action="{% url 'payslips' %}"> 
+                    {% csrf_token %}
+        
+                    <!--Make it required for the user to input all fields.-->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+        
+                    {% endif %}
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="employee">Employee</label>
+                                <select name="payslip_employee" id="payslip_employee" class="form-control">
+                                    <option value="" disabled selected>Select Employee</option>
+                                        <option value="{{employees}}">All Employees</option>
+                                        {% for employee in employees %}
+                                            <option value="{{employee.pk}}">{{employee.id_number}} ({{employee.name}})</option>
+                                        {% endfor %}
+                                </select>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="pay_date">Month</label>
-                                    <select name="payslip_date" id="payslip_date" class="form-control">
-                                        <option value="" disabled selected>Select Month</option>
-                                            <option value="January">January</option>
-                                            <option value="February">February</option>
-                                            <option value="March">March</option>
-                                            <option value="April">April</option>
-                                            <option value="May">May</option>
-                                            <option value="June">June</option>
-                                            <option value="July">July</option>
-                                            <option value="August">August</option>
-                                            <option value="September">September</option>
-                                            <option value="October">October</option>
-                                            <option value="November">November</option>
-                                            <option value="December">December</option>
-                                    </select>
-                                </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="pay_date">Month</label>
+                                <select name="payslip_date" id="payslip_date" class="form-control">
+                                    <option value="" disabled selected>Select Month</option>
+                                        <option value="January">January</option>
+                                        <option value="February">February</option>
+                                        <option value="March">March</option>
+                                        <option value="April">April</option>
+                                        <option value="May">May</option>
+                                        <option value="June">June</option>
+                                        <option value="July">July</option>
+                                        <option value="August">August</option>
+                                        <option value="September">September</option>
+                                        <option value="October">October</option>
+                                        <option value="November">November</option>
+                                        <option value="December">December</option>
+                                </select>
                             </div>
-                            
-                            <div class="col">
+                        </div>
+                        
+                        <div class="col">
+                            <div class="form-group">
                                 <label for="pay_year">Year</label>
-                                <div class="input-group mt-1">
-                                    <input type="text" name="payslip_year" id="payslip_year">
-                                </div>
-                            </div>
-                            
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="pay_cycle">Pay Cycle</label>
-                                    <select name="payslip_cycle" id="payslip_cycle" class="form-control">
-                                        <option value="" disabled selected>Select Cycle</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                    </select>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="payslip_year" id="payslip_year">
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-mx">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                        
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="pay_cycle">Pay Cycle</label>
+                                <select name="payslip_cycle" id="payslip_cycle" class="form-control">
+                                    <option value="" disabled selected>Select Cycle</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                </select>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-mx">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
         </div>
     </div>
         

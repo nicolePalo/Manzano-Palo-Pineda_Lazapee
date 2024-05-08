@@ -41,7 +41,7 @@ class Employee(models.Model):
             print(f"Error: Invalid overtime hours for employee {self.name}")
 
 class Payslip(models.Model):
-    id_number = models.ForeignKey(Employee, to_field='id_number', on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     month = models.CharField(max_length=20)
     date_range = models.CharField(max_length=50)
     year = models.CharField(max_length=4)
@@ -56,10 +56,10 @@ class Payslip(models.Model):
     total_pay = models.FloatField()
 
     def __str__(self):
-        return f"{self.pk}: Employee: {self.id_number}, Period: {self.month} {self.date_range}, {self.year}, Cycle: {self.pay_cycle}, Total Pay: {self.total_pay}"
+        return f"pk: {self.pk}, Employee: {self.employee.id_number}, Period: {self.month} {self.date_range}, {self.year}, Cycle: {self.pay_cycle}, Total Pay: {self.total_pay}"
     
     def getIDNumber(self):
-        return self.id_number
+        return self.employee.id_number
 
     def getMonth(self):
         return self.month
