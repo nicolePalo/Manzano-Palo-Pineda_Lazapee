@@ -48,7 +48,7 @@ def create_employee(request):
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        'payslips':payslips,
+        'payslips':Payslip.objects.all(),
         'employees':employees
     }
 
@@ -81,7 +81,7 @@ def payslips(request):
                 overtime=employee.overtime_pay or 0,
                 total_pay=tot_pay_no_tax - tax
             )
-            return redirect('payslips')
+            return render(request, 'payroll_app/payslips.html', context)
         
 
         ''' NOT REVIEWED YET! I can try to review leter - ethan
@@ -131,9 +131,25 @@ def update_employee(request, pk):
     else:
         return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
     
-def view_payslip(request):
-    #payslip = get_object_or_404(Payslip,pk=pk)
-    return render(request,'payroll_app/view_payslip.html') #add context later
+def view_payslip(request,pk):
+    context={
+        'payslip':payslip,
+        'deductions':deductions,
+        'deduct_values':deduct_values,
+        'employee':employee
+    }
+    payslip = get_object_or_404(Payslip,pk=pk)
+    employee = payslip.employee
+
+    if payslip.pay_cycle == 1:
+        deductions = ['Pag-ibig']
+        deduct_values = [payslip.pag_ibig]
+
+    if payslip.pay_cycle == 2:
+        deductions = ['PhilHealth','SSS']
+        deduct_values = [payslip.deductions_health,payslip.sss]
+
+    return render(request,'payroll_app/view_payslip.html',context) #add context later
 
 def delete_employee(request, pk):
     employee = get_object_or_404(Employee, pk=pk)
