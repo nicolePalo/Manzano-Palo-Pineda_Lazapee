@@ -27,7 +27,7 @@
                                 <label for="employee">Employee</label>
                                 <select name="payslip_employee" id="payslip_employee" class="form-control">
                                     <option value="" disabled selected>Select Employee</option>
-                                        <option value="{{employees}}">All Employees</option>
+                                        <option value='ALL'>All Employees</option>
                                         {% for employee in employees %}
                                             <option value="{{employee.pk}}">{{employee.id_number}} ({{employee.name}})</option>
                                         {% endfor %}
