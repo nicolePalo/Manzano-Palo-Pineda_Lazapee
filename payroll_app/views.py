@@ -14,61 +14,41 @@ All querysets done here.
 Creating Data Records: The django application receives the data from the form through a function in views.py and prepares it for inputting to the database. 
 '''
 
+employees = Employee.objects.all()
+payslips = Payslip.objects.all()
+
 def home(request):
     context = {
         'nav_selected': 'Employees',
-        'employees': Employee.objects.all()
+        'employees': employees
     }
     return render(request, 'payroll_app/home.html', context)
 
+
 def create_employee(request):
+    
     context = {
         'nav_selected': 'Employees',
-        'employees': Employee.objects.all()
+        'employees': employees
     }
     if request.method=="POST":
         name = request.POST.get('name')
-        id_number = request.POST.get('id')
+        id = request.POST.get('id')
         rate = request.POST.get('rate')
         allowance = request.POST.get('allowance')
-
-        if Employee.objects.filter(id_number=id_number).exists():
+        if Employee.objects.filter(id_number=id).exists():
             messages.error(request, 'The ID Number already exists.')
+            
             return render(request, 'payroll_app/create_employee.html', context)
-
-        Employee.objects.create(
-            name=name,
-            id_number=id_number,
-            rate=rate,
-            allowance=allowance or 0,
-            overtime_pay=0
-        )
-        return redirect('home')
-    
-    return render(request, 'payroll_app/create_employee.html', context )
-
-def update_employee(request, pk):
-    employee = get_object_or_404(Employee, pk=pk)
-
-    if request.method == "POST":
-        name = request.POST.get('name')
-        id_number = request.POST.get('id')
-        rate = request.POST.get('rate')
-        allowance = request.POST.get('allowance')
-
-        if Employee.objects.filter(id_number=id_number).exists():
-            messages.error(request, 'The ID Number already exists.')
-            return render(request, 'payroll_app/update_employee.html', {'employee': employee})
-
-        employee.name = name
-        employee.id_number = id_number
-        employee.rate = rate
-        employee.allowance = allowance or 0
-        employee.overtime_pay = 0
-        employee.save()
-        return redirect('home')
-
-    return render(request, 'payroll_app/update_employee.html', {'employee': employee})
+        
+        elif allowance == "":
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
+            return redirect('home')
+        else:
+            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
+            return redirect('home')
+    else:
+        return render(request, 'payroll_app/create_employee.html', context )
 
 def payslips(request):
     context = {
@@ -78,6 +58,8 @@ def payslips(request):
     }
 
     if request.method == "POST":
+        
+        #data obtained from form
         employee_id = request.POST.get('payslip_employee')
         month = request.POST.get('payslip_date')
         month_int = month_to_int.get(month, None)
@@ -108,7 +90,7 @@ def payslips(request):
                 month=month,
                 date_range=date_range,
                 year=year,
-                pay_cycle=pay_cycle,
+                pay_cycle=1,
                 rate=0.5 * employee.rate,
                 earnings_allowance=employee.allowance or 0,
                 deductions_tax=tax,
