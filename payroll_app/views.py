@@ -9,47 +9,67 @@ All querysets done here.
 Creating Data Records: The django application receives the data from the form through a function in views.py and prepares it for inputting to the database. 
 '''
 
-employees = Employee.objects.all()
-payslips = Payslip.objects.all()
-
 def home(request):
     context = {
         'nav_selected': 'Employees',
-        'employees': employees
+        'employees': Employee.objects.all()
     }
     return render(request, 'payroll_app/home.html', context)
 
-
 def create_employee(request):
-    
     context = {
         'nav_selected': 'Employees',
-        'employees': employees
+        'employees': Employee.objects.all()
     }
     if request.method=="POST":
         name = request.POST.get('name')
-        id = request.POST.get('id')
+        id_number = request.POST.get('id')
         rate = request.POST.get('rate')
         allowance = request.POST.get('allowance')
-        if Employee.objects.filter(id_number=id).exists():
+
+        if Employee.objects.filter(id_number=id_number).exists():
             messages.error(request, 'The ID Number already exists.')
-            
             return render(request, 'payroll_app/create_employee.html', context)
-        
-        elif allowance == "":
-            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
-            return redirect('home')
-        else:
-            Employee.objects.create(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
-            return redirect('home')
-    else:
-        return render(request, 'payroll_app/create_employee.html', context )
+
+        Employee.objects.create(
+            name=name,
+            id_number=id_number,
+            rate=rate,
+            allowance=allowance or 0,
+            overtime_pay=0
+        )
+        return redirect('home')
+    
+    return render(request, 'payroll_app/create_employee.html', context )
+
+def update_employee(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        id_number = request.POST.get('id')
+        rate = request.POST.get('rate')
+        allowance = request.POST.get('allowance')
+
+        if Employee.objects.filter(id_number=id_number).exists():
+            messages.error(request, 'The ID Number already exists.')
+            return render(request, 'payroll_app/update_employee.html', {'employee': employee})
+
+        employee.name = name
+        employee.id_number = id_number
+        employee.rate = rate
+        employee.allowance = allowance or 0
+        employee.overtime_pay = 0
+        employee.save()
+        return redirect('home')
+
+    return render(request, 'payroll_app/update_employee.html', {'employee': employee})
 
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        'payslips':payslips,
-        'employees':employees
+        'payslips':Payslip.objects.all(),
+        'employees':Employee.objects.all()
     }
 
     if request.method == "POST":
@@ -118,30 +138,7 @@ def payslips(request):
         print(query)
         '''
     return render(request, 'payroll_app/payslips.html', context)
-
-
-def update_employee(request, pk):
-    
-    employee = get_object_or_404(Employee, pk=pk)
-    if request.method=="POST":
-        name = request.POST.get('name')
-        id = request.POST.get('id')
-        rate = request.POST.get('rate')
-        allowance = request.POST.get('allowance')
-        if Employee.objects.filter(id_number=id).exists():
-            messages.error(request, 'The ID Number already exists.')
-            
-            return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
-        
-        elif allowance == "":
-            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
-            return redirect('home')
-        else:
-            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
-            return redirect('home')
-    else:
-        return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
-    
+  
 def view_payslip(request):
     #payslip = get_object_or_404(Payslip,pk=pk)
     return render(request,'payroll_app/view_payslip.html') #add context later
