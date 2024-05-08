@@ -143,13 +143,6 @@ def update_employee(request, pk):
         return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
     
 def view_payslip(request,pk):
-    context={
-        'payslip':payslip,
-        'deductions':deductions,
-        'deduct_values':deduct_values,
-        'deduct_sum':deduct_sum,
-        'earned_sum':earned_sum
-    }
     payslip = get_object_or_404(Payslip,pk=pk)
 
     earned_sum = float(payslip.rate)+float(payslip.earnings_allowance)+float(payslip.overtime)
@@ -163,6 +156,14 @@ def view_payslip(request,pk):
         deductions = ['PhilHealth','SSS']
         deduct_values = [payslip.deductions_health,payslip.sss]
         deduct_sum = float(payslip.deductions_tax)+float(payslip.deductions_health)+float(payslip.sss)
+    
+    context={
+        'payslip':payslip,
+        'deductions':deductions,
+        'deduct_values':deduct_values,
+        'deduct_sum':deduct_sum,
+        'earned_sum':earned_sum
+    }
 
     return render(request,'payroll_app/view_payslip.html',context) #add context later
 
