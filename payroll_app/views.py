@@ -73,8 +73,6 @@ def payslips(request):
     }
 
     if request.method == "POST":
-        
-        #data obtained from form
         employee_id = request.POST.get('payslip_employee')
         month = request.POST.get('payslip_date')
         year = request.POST.get('payslip_year')
@@ -87,7 +85,7 @@ def payslips(request):
             tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
         elif pay_cycle == 2:
             date_range = f'{month} 16-31, {year}'
-            tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - employee.rate*0.045 - employee.rate - 0.04
+            tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
         else:
             #  add error handling
             pass
