@@ -6,8 +6,13 @@
 {% block content %}
 <!--Payslip attributes: id_number, month, year, date_range, pay_cycle, rate, earnings_allowance, deductions_tax, deductions_health, pag_ibig, sss, overtime, total_pay-->
 
+
+
 <div class="container mx">
-    <div class="row">
+    <div class="d-flex justify-content-end mb-4">
+        <a href="{% url 'payslips' %}" class="btn btn-outline-secondary" style="border-color: gray">Back to Payslips</a>
+    </div>
+<div class="row">
         <div class="col-9">
             <p>NAME: {{payslip.employee.name}}</p>
             <p>ID NUMBER: {{payslip.employee.id_number}}</p>
