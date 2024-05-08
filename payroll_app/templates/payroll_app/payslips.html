@@ -12,13 +12,11 @@
                 <form class='form-inline align-items-center' method="post" action="{% url 'payslips' %}"> 
                     {% csrf_token %}
                     {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-        
+                    {% for message in messages %}
+                    <div class="alert alert-danger" style="width:30%; text-align: center;" >{{ message }}</div>   
+                    {% endfor %}
                     {% endif %}
+
                     <div class="row mb-3">
                         <div class="col">
                             <div class="form-group">
@@ -59,7 +57,7 @@
                             <div class="form-group">
                                 <label for="pay_year">Year</label>
                                 <div class="input-group">
-                                    <input class="form-control" type="text" name="payslip_year" id="payslip_year">
+                                    <input class="form-control" type="number" name="payslip_year" id="payslip_year">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +67,7 @@
                                 <label for="pay_cycle">Pay Cycle</label>
                                 <select name="payslip_cycle" id="payslip_cycle" class="form-control">
                                     <option value="" disabled selected>Select Cycle</option>
-                                        <option value="1">1</option>
+                                        <option value="1" >1</option>
                                         <option value="2">2</option>
                                 </select>
                             </div>

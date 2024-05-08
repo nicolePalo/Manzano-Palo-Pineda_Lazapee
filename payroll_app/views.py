@@ -74,6 +74,20 @@ def payslips(request):
     }
 
     if request.method == "POST":
+
+        if not request.POST.get('payslip_employee'):
+            messages.error(request, "Please select an employee.")
+            return redirect('payslips')  
+
+        if not request.POST.get('payslip_date') or not request.POST.get('payslip_cycle'):
+            messages.error(request, "Please select a month and pay cycle.")
+            return redirect('payslips')
+        
+        if not request.POST.get('payslip_year'):
+            messages.error(request, "Please input a year.")
+            return redirect('payslips')
+        
+
         employee_id = request.POST.get('payslip_employee')
         month = request.POST.get('payslip_date')
         month_int = month_to_int.get(month, None)
@@ -101,8 +115,8 @@ def payslips(request):
                 deductions_health = employee.rate*0.04
                 sss=employee.rate*0.045
             else:
-                # Add error handling
-                pass
+                messages.error(request, f"Invalid pay cycle selected for employee")
+                return render(request, 'payroll_app/payslips.html', context)
 
             tax = 0.2 * tot_pay_no_tax
 
@@ -122,31 +136,27 @@ def payslips(request):
                 total_pay=tot_pay_no_tax - tax
             )
 
+            employee.resetOvertime()
+
+
         return redirect('payslips')
     return render(request, 'payroll_app/payslips.html', context)
 
 
 def update_employee(request, pk):
-    
     employee = get_object_or_404(Employee, pk=pk)
     if request.method=="POST":
         name = request.POST.get('name')
         id = request.POST.get('id')
         rate = request.POST.get('rate')
         allowance = request.POST.get('allowance')
-        if Employee.objects.filter(id_number=id).exists():
+        if Employee.objects.filter(id_number=id).exists() and Employee.objects.filter(id_number=id) != employee.id_number:
             messages.error(request, 'The ID Number already exists.')
-            
             return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
-        
-        elif allowance == "":
-            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=0, overtime_pay= 0)
-            return redirect('home')
-        else:
-            Employee.objects.filter(pk=pk).update(name=name, id_number=id, rate=rate, allowance=allowance, overtime_pay= 0)
-            return redirect('home')
-    else:
-        return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
+        Employee.objects.filter(pk=pk).update(name=name, rate=rate, allowance=allowance or 0, overtime_pay= 0)
+        return redirect('home')
+    
+    return render(request, 'payroll_app/update_employee.html', {'employee':employee} )
     
 def view_payslip(request,pk):
     payslip = get_object_or_404(Payslip,pk=pk)
