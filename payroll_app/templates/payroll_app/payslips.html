@@ -121,7 +121,7 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                     <td> {{ payslip.employee.id_number}} </td>
                     <td> {{ payslip.date_range}} </td>
                     <td> {{ payslip.pay_cycle }} </td>
-                    <td> {{ payslip.total_pay}} </td>
+                    <td> {{ payslip.total_pay|floatformat:2}} </td>
                     <td> <a href="{% url 'view_payslip' pk=payslip.id %}" class="btn btn-success">View</a> </td>
                 </tr>
                 {% endfor %}
