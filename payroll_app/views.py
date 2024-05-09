@@ -127,7 +127,7 @@ def payslips(request):
             
             #handles duplicates
             if Payslip.objects.filter(employee=employee,month=month,year=year,pay_cycle=pay_cycle).exists():
-                messages.error(request,f'[ERROR: Failed to create payslip. Payslip already exists for {employee.name}.')
+                messages.error(request,f'Failed to create payslip. Payslip already exists.')
                 return render(request, 'payroll_app/payslips.html', context)
 
             else:
@@ -146,7 +146,7 @@ def payslips(request):
                     deductions_health = employee.rate*0.04
                     sss=employee.rate*0.045
                 else:
-                    messages.error(request, f"Invalid pay cycle selected for employee")
+                    messages.error(request, f"Invalid pay cycle selected for employee.")
                     return render(request, 'payroll_app/payslips.html', context)
 
                 tax = 0.2 * tot_pay_no_tax
