@@ -84,7 +84,7 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                         </div>
                         <form class="row" id="overtime-form" method="post" action="{% url 'add_overtime' employee.pk%}">{% csrf_token %}
                             <div class="col-lg-9 pb-sm-2 pb-lg-0">
-                                <input type="number" id="overtime-hours" name="overtime-hours" class="form-control form-control-sm d-inline me-md-2" placeholder="Overtime Hours">
+                                <input type="number" id="overtime-hours" name="overtime-hours" class="form-control form-control-sm d-inline me-md-2" min="0" placeholder="Overtime Hours">
                             </div>
                             <div class="col-lg-3">
                                 <button type="submit" class="btn btn-success w-100 btn-sm add-overtime">Add</button>
