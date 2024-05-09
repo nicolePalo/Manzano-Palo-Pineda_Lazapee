@@ -12,6 +12,7 @@ Bootstrap. (n.d.). Select. Bootstrap. https://getbootstrap.com/docs/5.0/forms/se
 Bootstrap. (n.d.). Spacing. Bootstrap. https://getbootstrap.com/docs/5.0/utilities/spacing/.
 Chapagain, S. (2023, July 6). How to Use a Foreign Key to Create Many-to-One Relationships in Django. Free Code Camp. https://www.freecodecamp.org/news/what-is-one-to-many-relationship-in-django/
 Django. (n.d.). Many-to-one relationships. Django. https://docs.djangoproject.com/en/5.0/topics/db/examples/many_to_one/
+pcoronel. (2014, May 19). Restrict django FloatField to 2 decimal places. Stack Overflow. https://stackoverflow.com/questions/23739030/restrict-django-floatfield-to-2-decimal-places.
 W3Schools. (n.d.). CSS3 Borders. W3Schools. https://www.w3schools.com/css/css3_borders.asp.
 W3Schools. (n.d.). CSS3 Images. W3Schools. https://www.w3schools.com/css/css3_images.asp.
 W3Schools. (n.d.). CSS3 Shadows. W3Schools. https://www.w3schools.com/css/css3_shadows.asp.
