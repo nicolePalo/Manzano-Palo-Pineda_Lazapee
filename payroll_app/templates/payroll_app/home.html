@@ -72,9 +72,9 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
             <tr>
                 <td>{{ employee.name }}</td>
                 <td>{{ employee.id_number }}</td>
-                <td>{{ employee.rate }}</td>
-                <td>{{ employee.allowance }}</td>
-                <td>{{ employee.overtime_pay }}</td>
+                <td>{{ employee.rate|floatformat:2 }}</td>
+                <td>{{ employee.allowance|floatformat:2 }}</td>
+                <td>{{ employee.overtime_pay|floatformat:2 }}</td>
                 <td>
                     <div class="container">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-start pb-2">
