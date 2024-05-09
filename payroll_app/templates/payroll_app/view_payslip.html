@@ -71,15 +71,15 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                                 </td>
                                 <td class="text-end">
                                     <ul class="list-unstyled mb-0">
-                                        <li>{{ payslip.rate }}</li>
-                                        <li>{{ payslip.earnings_allowance }}</li>
-                                        <li>{{ payslip.overtime }}</li>
+                                        <li>{{ payslip.rate|floatformat:2 }}</li>
+                                        <li>{{ payslip.earnings_allowance|floatformat:2 }}</li>
+                                        <li>{{ payslip.overtime|floatformat:2 }}</li>
                                     </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5 class="mb-0">Gross Pay</h5></td>
-                                <td class="text-end"><h5 class="mb-0">{{ earned_sum }}</h5></td>
+                                <td class="text-end"><h5 class="mb-0">{{ earned_sum|floatformat:2 }}</h5></td>
                             </tr>
                         </tbody>
                     </table>
@@ -107,16 +107,16 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                                 </td>
                                 <td class="text-end">
                                     <ul class="list-unstyled mb-0">
-                                        <li>{{ payslip.deductions_tax }}</li>
+                                        <li>{{ payslip.deductions_tax|floatformat:2 }}</li>
                                         {% for dvalue in deduct_values %}
-                                            <li>{{ dvalue }}</li>
+                                            <li>{{ dvalue|floatformat:2 }}</li>
                                         {% endfor %}
                                     </ul>
                                 </td>
                             </tr>
                             <tr>
                                 <td><h5 class="mb-0">Total deductions</h5></td>
-                                <td class="text-end"><h5 class="mb-0">({{ deduct_sum }})</h5></td>
+                                <td class="text-end"><h5 class="mb-0">({{ deduct_sum|floatformat:2 }})</h5></td>
                             </tr>
                         </tbody>
                     </table>
@@ -129,7 +129,7 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                         <thead>
                             <tr>
                                 <th class="col-8 fw-bold"><h3>NET PAY</h3></th>
-                                <th class="col-4 text-end"><h3>{{ payslip.total_pay }}</h3></th>
+                                <th class="col-4 text-end"><h3>{{ payslip.total_pay|floatformat:2 }}</h3></th>
                             </tr>
                         </thead>
                     </table>
