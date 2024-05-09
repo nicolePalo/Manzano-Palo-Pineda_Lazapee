@@ -92,7 +92,7 @@ def update_employee(request, pk):
 def payslips(request):
     context = {
         'nav_selected': 'Payslips',
-        'payslips': Payslip.objects.all(),
+        'payslips': Payslip.objects.all().order_by('-year'),
         'employees': Employee.objects.all()
     }
 
