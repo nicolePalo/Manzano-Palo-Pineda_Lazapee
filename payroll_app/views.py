@@ -1,3 +1,26 @@
+'''
+We hereby attest to the truth of the following facts:
+
+We have not discussed the HTML/CSS/Bootstrap/Python/Django language code in our program with anyone other than our instructor or the teaching assistants assigned to this course.
+
+We have not used HTML/CSS/Bootstrap/Python/Django language code obtained from another student, or any other unauthorized source, either modified or unmodified
+
+If any HTML/CSS/Bootstrap/Python/Django language code or docomentation used in our program was obtained from another source, such as a textbook or course notes, that has been clearly noted with a proper citation in the comments of our program.
+
+Bootstrap. (n.d.). Navbar. Bootstrap. https://getbootstrap.com/docs/5.0/components/navbar/.
+Bootstrap. (n.d.). Select. Bootstrap. https://getbootstrap.com/docs/5.0/forms/select/.
+Bootstrap. (n.d.). Spacing. Bootstrap. https://getbootstrap.com/docs/5.0/utilities/spacing/.
+Chapagain, S. (2023, July 6). How to Use a Foreign Key to Create Many-to-One Relationships in Django. Free Code Camp. https://www.freecodecamp.org/news/what-is-one-to-many-relationship-in-django/
+Django. (n.d.). Many-to-one relationships. Django. https://docs.djangoproject.com/en/5.0/topics/db/examples/many_to_one/
+W3Schools. (n.d.). CSS3 Borders. W3Schools. https://www.w3schools.com/css/css3_borders.asp.
+W3Schools. (n.d.). CSS3 Images. W3Schools. https://www.w3schools.com/css/css3_images.asp.
+W3Schools. (n.d.). CSS3 Shadows. W3Schools. https://www.w3schools.com/css/css3_shadows.asp.
+W3Schools. (n.d.). CSS3 Text Justify. W3Schools. https://www.w3schools.com/cssref/css3_pr_text-justify.php.
+W3Schools. (n.d.). CSS Text Spacing. W3Schools. https://www.w3schools.com/css/css_text_spacing.asp.
+W3Schools. (n.d.). HTML <input> placeholder Attribute. W3Schools. https://www.w3schools.com/tags/att_input_placeholder.asp.
+yuvi. (2013, October 28). django difference between - one to one, many to one and many to many. Stack Overflow. https://stackoverflow.com/questions/19641841/django-difference-between-one-to-one-many-to-one-and-many-to-many
+'''
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Employee, Payslip
@@ -101,42 +124,50 @@ def payslips(request):
             employees = [Employee.objects.get(pk=employee_id)]
 
         for employee in employees:
-            last_day = calendar.monthrange(int(year), int(month_int))[1]
-            if pay_cycle == 1:
-                date_range = f'{month} 1-{last_day//2}, {year}'
-                tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
-                pag_ibig = 100
-                deductions_health = 0
-                sss=0
-            elif pay_cycle == 2:
-                date_range = f'{month} {last_day//2 + 1}-{last_day}, {year}'
-                tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
-                pag_ibig = 0
-                deductions_health = employee.rate*0.04
-                sss=employee.rate*0.045
-            else:
-                messages.error(request, f"Invalid pay cycle selected for employee")
+            
+            #handles duplicates
+            if Payslip.objects.filter(employee=employee,month=month,year=year,pay_cycle=pay_cycle).exists():
+                messages.error(request,f'[ERROR: Failed to create payslip. Payslip already exists for {employee.name}.')
                 return render(request, 'payroll_app/payslips.html', context)
 
-            tax = 0.2 * tot_pay_no_tax
+            else:
 
-            payslip = Payslip.objects.create(
-                employee=employee,
-                month=month,
-                date_range=date_range,
-                year=year,
-                pay_cycle=pay_cycle,
-                rate=0.5*employee.rate,
-                earnings_allowance=employee.allowance or 0,
-                deductions_tax=tax,
-                deductions_health=deductions_health,
-                pag_ibig=pag_ibig,
-                sss=sss,
-                overtime=employee.overtime_pay or 0,
-                total_pay=tot_pay_no_tax - tax
-            )
+                last_day = calendar.monthrange(int(year), int(month_int))[1]
+                if pay_cycle == 1:
+                    date_range = f'{month} 1-{last_day//2}, {year}'
+                    tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - 100
+                    pag_ibig = 100
+                    deductions_health = 0
+                    sss=0
+                elif pay_cycle == 2:
+                    date_range = f'{month} {last_day//2 + 1}-{last_day}, {year}'
+                    tot_pay_no_tax = (0.5 * employee.rate) + (employee.allowance or 0) + (employee.overtime_pay or 0) - (employee.rate*0.045) - (employee.rate*0.04)
+                    pag_ibig = 0
+                    deductions_health = employee.rate*0.04
+                    sss=employee.rate*0.045
+                else:
+                    messages.error(request, f"Invalid pay cycle selected for employee")
+                    return render(request, 'payroll_app/payslips.html', context)
 
-            employee.resetOvertime()
+                tax = 0.2 * tot_pay_no_tax
+
+                payslip = Payslip.objects.create(
+                    employee=employee,
+                    month=month,
+                    date_range=date_range,
+                    year=year,
+                    pay_cycle=pay_cycle,
+                    rate=0.5*employee.rate,
+                    earnings_allowance=employee.allowance or 0,
+                    deductions_tax=tax,
+                    deductions_health=deductions_health,
+                    pag_ibig=pag_ibig,
+                    sss=sss,
+                    overtime=employee.overtime_pay or 0,
+                    total_pay=tot_pay_no_tax - tax
+                )
+
+                employee.resetOvertime()
 
 
         return redirect('payslips')
