@@ -47,10 +47,10 @@ yuvi. (2013, October 28). django difference between - one to one, many to one an
                         <input type="number" class="form-control mb-2" id="id" name="id" value="{{ employee.id_number }}" required =True disabled>
                     
                         <label for="rate" class="form-label" style="font-weight: bold;">Rate:</label>
-                        <input type="number" class="form-control mb-2" id="rate" name="rate" value="{{ employee.rate }}" required=True>
+                        <input type="number" class="form-control mb-2" id="rate" name="rate" value="{{ employee.rate }}" min="0" required=True>
                     
                         <label for="allowance" class="form-label" style="font-weight: bold;">Allowance (Optional):</label>
-                        <input type="number" class="form-control" id="allowance" name="allowance" value="{{ employee.allowance }}">
+                        <input type="number" class="form-control" id="allowance" name="allowance" min="0" value="{{ employee.allowance }}">
                     </div>
                    
                     <br>
